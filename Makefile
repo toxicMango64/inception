@@ -10,7 +10,7 @@ down:
 clean: down
 	yes | docker system prune -a
 	docker-compose -f ./srcs/docker-compose.yml down -v
-	rm -rf ${HOME}/data/nginx_press_data/ ${HOME}/data/database_data/
+	sudo rm -rf ${HOME}/data/nginx_press_data/ ${HOME}/data/database_data/
 	docker volume prune -f
 
 re: clean all up
