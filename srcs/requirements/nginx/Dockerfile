@@ -1,4 +1,5 @@
-FROM debian:bullseye-slim
+# FROM debian:bullseye-slim
+FROM debian:bullseye
 
 RUN apt update && apt install -y --no-install-recommends nginx
 COPY ./tools/installer.sh ./

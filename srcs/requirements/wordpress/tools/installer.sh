@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt install -y curl
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+curl -O -v https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod 777 wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 cd $LOCAL
@@ -13,4 +13,5 @@ wp user create $ADMIN_USER $ADMIN_EMAIL_TWO --role=administrator --user_pass=$MY
 wp theme install twentysixteen --activate --allow-root
 mkdir -p /run/php && chown root:root /run/php && chmod 777 /run/php
 sed -i 's#/run/php/php7.3-fpm.sock#9000#g' /etc/php/7.3/fpm/pool.d/www.conf
+tail -f /dev/null
 php-fpm7.3 --nodaemonize

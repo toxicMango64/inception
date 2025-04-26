@@ -1,7 +1,8 @@
-FROM debian:bullseye-slim
+# FROM debian:bullseye-slim
+FROM debian:bullseye
 
 RUN apt update && apt install -y --no-install-recommends \
-	wget mariadb-client php-cgi \
+	wget curl ca-certificates mariadb-client php-cgi \
     php-fpm php-zip php-gd php-xml-util php-mysql && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
