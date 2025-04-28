@@ -1,15 +1,18 @@
-# FROM debian:bullseye-slim
-FROM debian:bullseye
+FROM debian:buster
 
-RUN apt update && apt install -y --no-install-recommends \
-	mariadb-server
+RUN apt-get update && apt-get install -y \
+	mariadb-server && \
+	apt-get clean && \
+	rm -rf /var/lib/apt-get/lists/*
 
 # Ensure the mysqld socket directory exists
-mkdir -p /run/mysqld
-chown mysql:mysql /run/mysqld
+RUN mkdir -p /run/mysqld
+RUN chown mysql:mysql /run/mysqld
+RUN service mysql start
 
 COPY ./tools/installer.sh ./
 RUN  chmod +x installer.sh
+
 EXPOSE 3306
 
 CMD  ["./installer.sh"]

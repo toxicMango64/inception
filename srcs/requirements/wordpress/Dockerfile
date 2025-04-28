@@ -1,14 +1,15 @@
-# FROM debian:bullseye-slim
-FROM debian:bullseye
+FROM debian:buster
 
-RUN apt update && apt install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
 	wget curl ca-certificates mariadb-client php-cgi \
-    php-fpm php-zip php-gd php-xml-util php-mysql && \
+	php-fpm php-zip php-gd php-xml-util php-mysql && \
 	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
+	rm -rf /var/lib/apt-get/lists/*
 
 COPY ./tools/installer.sh ./
 RUN chmod +x installer.sh
 EXPOSE 9000
 
 CMD [ "./installer.sh" ]
+
+# apt-utils

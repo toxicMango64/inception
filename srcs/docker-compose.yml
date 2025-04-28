@@ -7,12 +7,11 @@ services :
         build: ./requirements/nginx/
         ports:
             - "443:443"
-            - "8080:8080"
-        # restart: unless-stopped
+        restart: unless-stopped
         env_file:
             - .env
         volumes:
-            - nginx_press_data:/var/www/html/
+            - wordpressData:/var/www/html/
         depends_on:
             - wordpress
         networks:
@@ -21,40 +20,42 @@ services :
         image: mariadb:mariadb
         container_name: mariadb
         build: ./requirements/mariadb/
-        # restart: unless-stopped
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
         env_file:
             - .env
         networks:
             - netfornet
         volumes:
-            - database_data:/var/lib/mysql
+            - mariadb:/var/lib/mysql
     wordpress:
         image: wordpress:wordpress
         container_name: wordpress
         build: ./requirements/wordpress/
-        # restart: unless-stopped
+        restart: unless-stopped
         env_file:
             - .env
         depends_on:
             - mariadb
         volumes:
-            - nginx_press_data:/var/www/html/
+            - wordpressData:/var/www/html/
         networks:
             - netfornet
 
 volumes:
-  nginx_press_data:
+  wordpressData:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: $HOME/data/nginx_press_data/
-  database_data:
+      device: $HOME/data/wordpressData/
+  mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: $HOME/data/database_data/
+      device: $HOME/data/mariadb/
 
 networks:
     netfornet:

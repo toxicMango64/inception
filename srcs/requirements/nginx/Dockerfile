@@ -1,10 +1,12 @@
-# FROM debian:bullseye-slim
-FROM debian:bullseye
+FROM debian:buster
 
-RUN apt update && apt install -y --no-install-recommends nginx
+RUN apt-get update && apt-get install -y nginx openssl
+
 COPY ./tools/installer.sh ./
-COPY ./conf/nginx.conf /etc/nginx/
 RUN  chmod +x installer.sh
+
+COPY ./conf/nginx.conf /etc/nginx/
+
 EXPOSE 443
 
 CMD ["./installer.sh"]
